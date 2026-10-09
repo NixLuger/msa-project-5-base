@@ -1,0 +1,196 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.9 Chrome/128.0.6613.186 Electron/32.2.5 Safari/537.36" version="26.0.9">
+  <diagram id="c4-container-tradeware" name="C4 Container - TradeWare To Be">
+    <mxGraphModel dx="2940" dy="1181" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <object placeholders="1" c4Name="Сотрудник склада" c4Type="Person" c4Description="Загружает отчёты через ERP-интерфейс" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#cccccc&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="person-warehouse">
+          <mxCell style="html=1;fontSize=11;dashed=0;whiteSpace=wrap;fillColor=#083F75;strokeColor=#06315C;fontColor=#ffffff;shape=mxgraph.c4.person2;align=center;metaEdit=1;points=[[0.5,0,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0]];resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="60" y="80" width="200" height="180" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Партнёр / клиент" c4Type="Person" c4Description="Получает данные об остатках через API" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#cccccc&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="person-partner">
+          <mxCell style="html=1;fontSize=11;dashed=0;whiteSpace=wrap;fillColor=#083F75;strokeColor=#06315C;fontColor=#ffffff;shape=mxgraph.c4.person2;align=center;metaEdit=1;points=[[0.5,0,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0]];resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="60" y="320" width="200" height="180" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Frontend" c4Type="Container" c4Technology="Angular, WebSockets" c4Description="Web-интерфейс для сотрудников склада и менеджеров" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="container-frontend">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C7FC0;fontColor=#ffffff;align=center;arcSize=8;metaEdit=1;resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="420" y="100" width="260" height="140" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="boundary-gcp" value="GCP (Compute Engine)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#1168BD;strokeWidth=2;dashed=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=6;fontColor=#1168BD;fontStyle=1;arcSize=2;" parent="1" vertex="1">
+          <mxGeometry x="740" y="40" width="1380" height="1180" as="geometry" />
+        </mxCell>
+        <object placeholders="1" c4Name="Monolith Backend" c4Type="Container" c4Technology="Java 11, WildFly" c4Description="Online-операции: приём заявок, отображение остатков, API для партнёров" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="container-monolith">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C7FC0;fontColor=#ffffff;align=center;arcSize=8;metaEdit=1;resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="820" y="120" width="280" height="160" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Spring Batch Worker [NEW]" c4Type="Container" c4Technology="Java 11, Spring Boot, Spring Batch, Spring Scheduler" c4Description="Долгоживущий воркер: @Scheduled(polling) опрашивает GCS, запускает Spring Batch Job, обрабатывает отчёты чанками" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="container-springbatch">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C7FC0;fontColor=#ffffff;align=center;arcSize=8;metaEdit=1;resizable=0;strokeWidth=2;" parent="1" vertex="1">
+            <mxGeometry x="820" y="420" width="280" height="200" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="badge-scheduler" value="Spring Scheduler&#xa;@Scheduled(polling)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1168BD;strokeWidth=2;fontColor=#1168BD;fontSize=10;align=center;verticalAlign=middle;arcSize=20;" parent="1" vertex="1">
+          <mxGeometry x="810" y="580" width="130" height="50" as="geometry" />
+        </mxCell>
+        <object placeholders="1" c4Name="БД номенклатуры" c4Type="Container" c4Technology="PostgreSQL" c4Description="Актуальные данные о наличии товаров на складах" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="container-nomenclature-db">
+          <mxCell style="shape=cylinder3;size=15;whiteSpace=wrap;html=1;boundedLbl=1;rounded=0;labelBackgroundColor=none;fillColor=#438DD5;strokeColor=#3C7FC0;fontSize=12;fontColor=#ffffff;align=center;metaEdit=1;resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="1300" y="140" width="240" height="140" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="БД справочных данных" c4Type="Container" c4Technology="PostgreSQL" c4Description="Характеристики товаров, промо, справочники" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="container-reference-db">
+          <mxCell style="shape=cylinder3;size=15;whiteSpace=wrap;html=1;boundedLbl=1;rounded=0;labelBackgroundColor=none;fillColor=#438DD5;strokeColor=#3C7FC0;fontSize=12;fontColor=#ffffff;align=center;metaEdit=1;resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="1300" y="340" width="240" height="140" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="GCS" c4Type="Container" c4Technology="Google Cloud Storage" c4Description="Загруженные CSV-файлы отчётов по остаткам" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="container-gcs">
+          <mxCell style="shape=cylinder3;size=15;whiteSpace=wrap;html=1;boundedLbl=1;rounded=0;labelBackgroundColor=none;fillColor=#438DD5;strokeColor=#3C7FC0;fontSize=12;fontColor=#ffffff;align=center;metaEdit=1;resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="1300" y="580" width="240" height="140" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Prometheus [NEW]" c4Type="Container" c4Technology="Prometheus + Micrometer" c4Description="Сбор и хранение метрик приложений" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="container-prometheus">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C7FC0;fontColor=#ffffff;align=center;arcSize=8;metaEdit=1;resizable=0;strokeWidth=2;" parent="1" vertex="1">
+            <mxGeometry x="1300" y="760" width="240" height="140" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Grafana [NEW]" c4Type="Container" c4Technology="Grafana" c4Description="Дашборды и алерты по метрикам" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="container-grafana">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C7FC0;fontColor=#ffffff;align=center;arcSize=8;metaEdit=1;resizable=0;strokeWidth=2;" parent="1" vertex="1">
+            <mxGeometry x="1620" y="760" width="240" height="140" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Loki / ELK [NEW]" c4Type="Container" c4Technology="Grafana Loki или ELK Stack" c4Description="Централизованный сбор и поиск логов" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="container-loki">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C7FC0;fontColor=#ffffff;align=center;arcSize=8;metaEdit=1;resizable=0;strokeWidth=2;" parent="1" vertex="1">
+            <mxGeometry x="1620" y="980" width="240" height="140" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="edge-person-frontend" value="использует&#xa;[HTTPS]" style="endArrow=blockThin;html=1;fontSize=10;fontColor=#404040;strokeWidth=1.9685;endFill=1;strokeColor=#828282;edgeStyle=orthogonalEdgeStyle;" parent="1" source="person-warehouse" target="container-frontend" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-partner-monolith" value="API-запросы&#xa;[REST/JSON]" style="endArrow=blockThin;html=1;fontSize=10;fontColor=#404040;strokeWidth=1.9685;endFill=1;strokeColor=#828282;edgeStyle=orthogonalEdgeStyle;" parent="1" source="person-partner" target="container-monolith" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="960" y="400" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-frontend-monolith" value="вызовы API&#xa;[REST/JSON]" style="endArrow=blockThin;html=1;fontSize=10;fontColor=#404040;strokeWidth=1.9685;endFill=1;strokeColor=#828282;edgeStyle=orthogonalEdgeStyle;" parent="1" source="container-frontend" target="container-monolith" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-monolith-nomdb" value="online R/W&#xa;[SQL/JDBC]" style="endArrow=blockThin;html=1;fontSize=10;fontColor=#404040;strokeWidth=1.9685;endFill=1;strokeColor=#828282;edgeStyle=orthogonalEdgeStyle;" parent="1" source="container-monolith" target="container-nomenclature-db" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-monolith-refdb" value="чтение&#xa;[SQL/JDBC]" style="endArrow=blockThin;html=1;fontSize=10;fontColor=#404040;strokeWidth=1.9685;endFill=1;strokeColor=#828282;edgeStyle=orthogonalEdgeStyle;" parent="1" source="container-monolith" target="container-reference-db" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1600" y="120" />
+              <mxPoint x="1600" y="410" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-monolith-gcs" value="сохранение файла&#xa;[GCS SDK]" style="endArrow=blockThin;html=1;fontSize=10;fontColor=#404040;strokeWidth=1.9685;endFill=1;strokeColor=#828282;edgeStyle=orthogonalEdgeStyle;" parent="1" source="container-monolith" target="container-gcs" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1040" y="100" />
+              <mxPoint x="1640" y="100" />
+              <mxPoint x="1640" y="640" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-springbatch-gcs" value="polling: проверка новых файлов + чтение&#xa;[GCS SDK, @Scheduled]" style="endArrow=blockThin;html=1;fontSize=10;fontColor=#404040;strokeWidth=2;endFill=1;strokeColor=#1168BD;edgeStyle=orthogonalEdgeStyle;" parent="1" source="container-springbatch" target="container-gcs" edge="1">
+          <mxGeometry x="-0.7241" y="190" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1200" y="520" />
+              <mxPoint x="1200" y="640" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-springbatch-nomdb" value="batch-запись&#xa;[SQL/JDBC, chunks]" style="endArrow=blockThin;html=1;fontSize=10;fontColor=#404040;strokeWidth=2;endFill=1;strokeColor=#1168BD;edgeStyle=orthogonalEdgeStyle;" parent="1" source="container-springbatch" target="container-nomenclature-db" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1730" y="520" />
+              <mxPoint x="1730" y="210" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-springbatch-refdb" value="batch-чтение&#xa;[SQL/JDBC]" style="endArrow=blockThin;html=1;fontSize=10;fontColor=#404040;strokeWidth=2;endFill=1;strokeColor=#1168BD;edgeStyle=orthogonalEdgeStyle;" parent="1" source="container-springbatch" target="container-reference-db" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-springbatch-prom" value="метрики Job&#xa;[Micrometer]" style="endArrow=blockThin;html=1;fontSize=10;fontColor=#404040;strokeWidth=2;endFill=1;strokeColor=#1168BD;edgeStyle=orthogonalEdgeStyle;" parent="1" source="container-springbatch" target="container-prometheus" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="960" y="830" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-springbatch-loki" value="логи&#xa;[stdout]" style="endArrow=blockThin;html=1;fontSize=10;fontColor=#404040;strokeWidth=2;endFill=1;strokeColor=#1168BD;edgeStyle=orthogonalEdgeStyle;" parent="1" source="container-springbatch" target="container-loki" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1920" y="550" />
+              <mxPoint x="1920" y="1050" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-monolith-prom" value="метрики&#xa;[Micrometer]" style="endArrow=blockThin;html=1;fontSize=10;fontColor=#404040;strokeWidth=2;endFill=1;strokeColor=#1168BD;edgeStyle=orthogonalEdgeStyle;" parent="1" source="container-monolith" target="container-prometheus" edge="1">
+          <mxGeometry x="0.2632" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1140" y="240" />
+              <mxPoint x="1140" y="800" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-monolith-loki" value="логи&#xa;[stdout]" style="endArrow=blockThin;html=1;fontSize=10;fontColor=#404040;strokeWidth=2;endFill=1;strokeColor=#1168BD;edgeStyle=orthogonalEdgeStyle;" parent="1" source="container-monolith" target="container-loki" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="960" y="80" />
+              <mxPoint x="1980" y="80" />
+              <mxPoint x="1980" y="1080" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-prom-grafana" value="PromQL" style="endArrow=blockThin;html=1;fontSize=10;fontColor=#404040;strokeWidth=1.9685;endFill=1;strokeColor=#1168BD;edgeStyle=orthogonalEdgeStyle;" parent="1" source="container-grafana" target="container-prometheus" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-title" value="&lt;b&gt;Легенда&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#333333;" parent="1" vertex="1">
+          <mxGeometry x="90" y="540" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-person" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#083F75;strokeColor=#06315C;" parent="1" vertex="1">
+          <mxGeometry x="90" y="580" width="30" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-person-label" value="Person" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#333333;" parent="1" vertex="1">
+          <mxGeometry x="130" y="575" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-container" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C7FC0;" parent="1" vertex="1">
+          <mxGeometry x="90" y="615" width="30" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-container-label" value="Container (существующий)" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#333333;" parent="1" vertex="1">
+          <mxGeometry x="130" y="610" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-container-new" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C7FC0;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="90" y="650" width="30" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-container-new-label" value="Container [NEW]" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#333333;" parent="1" vertex="1">
+          <mxGeometry x="130" y="645" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-boundary" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#1168BD;strokeWidth=2;dashed=1;" parent="1" vertex="1">
+          <mxGeometry x="90" y="685" width="30" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-boundary-label" value="System Boundary" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#333333;" parent="1" vertex="1">
+          <mxGeometry x="130" y="680" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-new-edge" value="" style="endArrow=blockThin;html=1;strokeColor=#1168BD;strokeWidth=2;endFill=1;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="90" y="730" as="sourcePoint" />
+            <mxPoint x="120" y="730" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend-new-edge-label" value="Связь с новым контейнером" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#333333;" parent="1" vertex="1">
+          <mxGeometry x="130" y="715" width="240" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

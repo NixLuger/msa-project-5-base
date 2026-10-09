@@ -1,0 +1,102 @@
+x-airflow-common: &airflow-common
+  build: .
+  environment: &airflow-common-env
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+    AIRFLOW__CORE__FERNET_KEY: ''
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+    AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+    AIRFLOW__API__AUTH_BACKENDS: 'airflow.api.auth.backend.basic_auth,airflow.api.auth.backend.session'
+    AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: 'true'
+    # SMTP -> MailHog
+    AIRFLOW__SMTP__SMTP_HOST: mailhog
+    AIRFLOW__SMTP__SMTP_PORT: 1025
+    AIRFLOW__SMTP__SMTP_STARTTLS: 'false'
+    AIRFLOW__SMTP__SMTP_SSL: 'false'
+    AIRFLOW__SMTP__SMTP_USER: ''
+    AIRFLOW__SMTP__SMTP_PASSWORD: ''
+    AIRFLOW__SMTP__SMTP_MAIL_FROM: 'airflow@example.com'
+    # Source DB (PostgreSQL как источник данных)
+    SOURCE_DB_HOST: postgres
+    SOURCE_DB_PORT: 5432
+    SOURCE_DB_NAME: source
+    SOURCE_DB_USER: airflow
+    SOURCE_DB_PASSWORD: airflow
+    ALERT_EMAIL: 'data-team@example.com'
+    DELIVERIES_PATH: /opt/airflow/data/deliveries.csv
+  volumes:
+    - ./dags:/opt/airflow/dags
+    - ./data:/opt/airflow/data
+    - ./logs:/opt/airflow/logs
+  user: "${AIRFLOW_UID:-50000}:0"
+  depends_on:
+    postgres:
+      condition: service_healthy
+    mailhog:
+      condition: service_started
+
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    volumes:
+      - postgres-db-volume:/var/lib/postgresql/data
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "airflow"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+    restart: always
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    ports:
+      - "8025:8025"   # UI для просмотра писем
+      - "1025:1025"   # SMTP
+    restart: always
+
+  airflow-init:
+    <<: *airflow-common
+    entrypoint: /bin/bash
+    command:
+      - -c
+      - |
+        airflow db migrate
+        airflow users create \
+          --username admin --firstname Admin --lastname User \
+          --role Admin --email admin@example.com --password admin
+        airflow connections add 'source_db' \
+          --conn-type 'postgres' \
+          --conn-host 'postgres' --conn-schema 'source' \
+          --conn-login 'airflow' --conn-password 'airflow' \
+          --conn-port 5432 || true
+    restart: on-failure
+
+  airflow-webserver:
+    <<: *airflow-common
+    command: webserver
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    restart: always
+
+  airflow-scheduler:
+    <<: *airflow-common
+    command: scheduler
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8974/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    restart: always
+
+volumes:
+  postgres-db-volume:
