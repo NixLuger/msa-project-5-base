@@ -1,0 +1,85 @@
+<mxfile host="app.diagrams.net" agent="c4-diagram">
+  <diagram id="c4-container-to-be" name="C4 Container - To Be">
+    <mxGraphModel dx="1428" dy="1312" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="person" parent="1" style="shape=actor;whiteSpace=wrap;html=1;fillColor=#08427B;strokeColor=#073B6F;fontColor=#ffffff;verticalLabelPosition=bottom;verticalAlign=top;align=center;" value="B2B Client&#xa;[Person]&#xa;Получает CSV-прайс-лист" vertex="1">
+          <mxGeometry height="100" width="80" x="1280" as="geometry" />
+        </mxCell>
+        <mxCell id="portal" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#7A7A7A;fontColor=#ffffff;align=center;verticalAlign=middle;arcSize=10;" value="B2B Client Portal&#xa;[Software System, External]&#xa;Читает CSV из S3 и доставляет клиенту" vertex="1">
+          <mxGeometry height="90" width="260" x="1180" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="s3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#7A7A7A;fontColor=#ffffff;align=center;verticalAlign=middle;arcSize=10;" value="S3 Object Storage&#xa;[Software System, External]&#xa;b2b-price-lists/{date}/{client_id}.csv" vertex="1">
+          <mxGeometry height="90" width="260" x="1180" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="grafana" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#7A7A7A;fontColor=#ffffff;align=center;verticalAlign=middle;arcSize=10;" value="Grafana&#xa;[Software System, External]&#xa;Дашборды, алертинг" vertex="1">
+          <mxGeometry height="90" width="220" x="880" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="boundary" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#1168BD;strokeWidth=2;dashed=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=6;fontColor=#1168BD;fontStyle=1;arcSize=2;" value="K8s Cluster (Online Store)" vertex="1">
+          <mxGeometry height="420" width="1400" x="60" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="cronjob" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C7FC0;fontColor=#ffffff;align=center;verticalAlign=middle;arcSize=8;" value="Price List Generator&#xa;[Container: K8s CronJob, Python 3.11]&#xa;&#xa;Каждое утро в 06:00&#xa;читает данные из Price DB,&#xa;связывает 4 таблицы,&#xa;формирует CSV на каждого клиента,&#xa;загружает в S3" vertex="1">
+          <mxGeometry height="180" width="300" x="180" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="db" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#438DD5;strokeColor=#3C7FC0;fontColor=#ffffff;align=center;verticalAlign=middle;" value="Price DB&#xa;[Container: PostgreSQL]&#xa;&#xa;products&#xa;categories&#xa;clients&#xa;client_prices" vertex="1">
+          <mxGeometry height="180" width="200" x="580" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="loki" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C7FC0;fontColor=#ffffff;align=center;verticalAlign=middle;arcSize=10;" value="Loki&#xa;[Container: Logging]&#xa;Собирает stdout-логи" vertex="1">
+          <mxGeometry height="100" width="220" x="880" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="prom" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C7FC0;fontColor=#ffffff;align=center;verticalAlign=middle;arcSize=10;" value="Prometheus&#xa;[Container: Monitoring]&#xa;Собирает метрики Job" vertex="1">
+          <mxGeometry height="100" width="220" x="1180" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="cronctrl" parent="1" style="text;html=1;strokeColor=none;fillColor=#f5f5f5;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontColor=#333333;" value="⏰ K8s CronJob Controller&#xa;schedule: 0 6 * * *" vertex="1">
+          <mxGeometry height="40" width="300" x="180" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="cronctrl" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#707070;" target="cronjob" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="cronjob" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#707070;fontColor=#333333;" target="db" value="SQL SELECT">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="cronjob" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=openThin;endFill=0;strokeColor=#707070;fontColor=#333333;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;startArrow=none;startFill=0;" target="s3" value="PUT CSV">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="380" y="560" />
+              <mxPoint x="380" y="490" />
+              <mxPoint x="1310" y="490" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="cronjob" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#707070;fontColor=#333333;" target="loki" value="logs">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="440" y="510" />
+              <mxPoint x="990" y="510" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="cronjob" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#707070;fontColor=#333333;" target="prom" value="metrics">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="330" y="790" />
+              <mxPoint x="1290" y="790" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="grafana" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#707070;fontColor=#333333;" target="prom" value="PromQL">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1130" y="265.06" />
+              <mxPoint x="1130" y="580" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="portal" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#707070;fontColor=#333333;" target="s3" value="GET CSV">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="portal" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#707070;fontColor=#333333;" target="person" value="delivers CSV">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,20 @@
+[2026-09-27T01:54:11.413+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-09-27T01:54:11.422+0000] {taskinstance.py:2612} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: etl_pipeline.branch_by_threshold manual__2026-09-27T01:54:09.231406+00:00 [queued]>
+[2026-09-27T01:54:11.427+0000] {taskinstance.py:2612} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: etl_pipeline.branch_by_threshold manual__2026-09-27T01:54:09.231406+00:00 [queued]>
+[2026-09-27T01:54:11.427+0000] {taskinstance.py:2865} INFO - Starting attempt 1 of 3
+[2026-09-27T01:54:11.435+0000] {taskinstance.py:2888} INFO - Executing <Task(_BranchPythonDecoratedOperator): branch_by_threshold> on 2026-09-27 01:54:09.231406+00:00
+[2026-09-27T01:54:11.437+0000] {standard_task_runner.py:72} INFO - Started process 687 to run task
+[2026-09-27T01:54:11.439+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'etl_pipeline', 'branch_by_threshold', 'manual__2026-09-27T01:54:09.231406+00:00', '--job-id', '22', '--raw', '--subdir', 'DAGS_FOLDER/etl_pipeline.py', '--cfg-path', '/tmp/tmpt3vhm6r1']
+[2026-09-27T01:54:11.440+0000] {standard_task_runner.py:105} INFO - Job 22: Subtask branch_by_threshold
+[2026-09-27T01:54:11.468+0000] {task_command.py:467} INFO - Running <TaskInstance: etl_pipeline.branch_by_threshold manual__2026-09-27T01:54:09.231406+00:00 [running]> on host c3fcbe90086c
+[2026-09-27T01:54:11.520+0000] {taskinstance.py:3131} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data-platform' AIRFLOW_CTX_DAG_ID='etl_pipeline' AIRFLOW_CTX_TASK_ID='branch_by_threshold' AIRFLOW_CTX_EXECUTION_DATE='2026-09-27T01:54:09.231406+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-27T01:54:09.231406+00:00'
+[2026-09-27T01:54:11.521+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-09-27T01:54:11.525+0000] {python.py:240} INFO - Done. Returned value was: ok_path
+[2026-09-27T01:54:11.526+0000] {branch.py:38} INFO - Branch into ok_path
+[2026-09-27T01:54:11.526+0000] {skipmixin.py:230} INFO - Following branch ('ok_path',)
+[2026-09-27T01:54:11.531+0000] {skipmixin.py:278} INFO - Skipping tasks [('alert_path', -1)]
+[2026-09-27T01:54:11.546+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-09-27T01:54:11.546+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=etl_pipeline, task_id=branch_by_threshold, run_id=manual__2026-09-27T01:54:09.231406+00:00, execution_date=20260927T015409, start_date=20260927T015411, end_date=20260927T015411
+[2026-09-27T01:54:11.572+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-09-27T01:54:11.600+0000] {taskinstance.py:3900} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-09-27T01:54:11.602+0000] {local_task_job_runner.py:245} INFO - ::endgroup::
